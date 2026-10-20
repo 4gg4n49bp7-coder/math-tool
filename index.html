@@ -1,29 +1,27 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>数学キーボード</title><style>
-*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;margin:0;background:#f3f5fa;color:#18243b}main{max-width:680px;margin:auto;padding:14px 12px 30px}h1{font-size:22px;margin:8px 0 5px}.hint{font-size:13px;color:#59677a;margin:0 0 12px}.panel{background:white;padding:12px;border-radius:14px;margin-bottom:12px;box-shadow:0 2px 8px #0001}textarea{width:100%;height:130px;resize:vertical;border:1px solid #aab4c6;border-radius:9px;font-size:19px;line-height:1.5;padding:10px;color:#16233b;background:white}button{border:1px solid #cbd5e1;background:#e9eff9;border-radius:9px;min-height:46px;font-size:19px;color:#172a4c;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:active{background:#b8d0ff}.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}.tabs{display:flex;gap:6px;margin-bottom:9px}.tabs button{flex:1;font-size:14px;min-height:40px}.tabs button.active{background:#2258a8;color:white}.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:9px}.actions button{font-size:14px}.wide{background:#2258a8;color:white}.status{font-size:13px;color:#25624b;min-height:18px;margin:7px 0 0}.hidden{display:none}.keycap{font-size:16px}.notice{font-size:12px;color:#657187;margin-top:8px}</style></head><body><main><h1>∫ 数学キーボード</h1><p class="hint">Ver. 0.3 · ボタンを押して数式を入力。オフライン動作。</p><section class="panel"><textarea id="expr" aria-label="数式入力欄" placeholder="下のキーを押して入力してください" spellcheck="false" autocapitalize="off"></textarea><div class="actions"><button type="button" onclick="moveCursor(-1)">← 移動</button><button type="button" onclick="erase()">⌫ 削除</button><button type="button" onclick="moveCursor(1)">移動 →</button><button type="button" onclick="clearText()">全消去</button><button type="button" onclick="copyText()" class="wide">コピー</button><button type="button" onclick="insertText(' ')">空白</button></div><p id="status" class="status">準備完了</p></section><section class="panel"><div class="tabs"><button type="button" class="active" onclick="showTab('basic',this)">数字・文字</button><button type="button" onclick="showTab('math',this)">数式</button><button type="button" onclick="showTab('logic',this)">集合・論理</button></div>
-<div id="basic" class="grid">
-<button onclick="insertText('7')">7</button><button onclick="insertText('8')">8</button><button onclick="insertText('9')">9</button><button onclick="insertText('+')">+</button><button onclick="insertText('-')">−</button><button onclick="insertText('=')">=</button>
-<button onclick="insertText('4')">4</button><button onclick="insertText('5')">5</button><button onclick="insertText('6')">6</button><button onclick="insertText('×')">×</button><button onclick="insertText('÷')">÷</button><button onclick="insertText('^')">^</button>
-<button onclick="insertText('1')">1</button><button onclick="insertText('2')">2</button><button onclick="insertText('3')">3</button><button onclick="insertText('(')">(</button><button onclick="insertText(')')">)</button><button onclick="insertText('.')">.</button>
-<button onclick="insertText('0')">0</button><button onclick="insertText('x')">x</button><button onclick="insertText('y')">y</button><button onclick="insertText('a')">a</button><button onclick="insertText('b')">b</button><button onclick="insertText('n')">n</button>
-<button onclick="insertText('i')">i</button><button onclick="insertText('t')">t</button><button onclick="insertText('f')">f</button><button onclick="insertText('g')">g</button><button onclick="insertText(',')">,</button><button onclick="insertText('∞')">∞</button></div>
-<div id="math" class="grid hidden">
-<button onclick="insertText('∫')">∫</button><button onclick="insertText('∑')">∑</button><button onclick="insertText('√(')">√</button><button onclick="insertText('π')">π</button><button onclick="insertText('∞')">∞</button><button onclick="insertText('∂')">∂</button>
-<button onclick="insertText('²')">x²</button><button onclick="insertText('³')">x³</button><button onclick="insertText('^(')">xⁿ</button><button onclick="insertText('(')">(</button><button onclick="insertText(')')">)</button><button onclick="insertText('/')">a/b</button>
-<button onclick="insertText('α')">α</button><button onclick="insertText('β')">β</button><button onclick="insertText('θ')">θ</button><button onclick="insertText('Δ')">Δ</button><button onclick="insertText('λ')">λ</button><button onclick="insertText('μ')">μ</button>
-<button onclick="insertText('≤')">≤</button><button onclick="insertText('≥')">≥</button><button onclick="insertText('≠')">≠</button><button onclick="insertText('±')">±</button><button onclick="insertText('≈')">≈</button><button onclick="insertText('→')">→</button>
-<button onclick="insertText('∫₀¹ ')">∫₀¹</button><button onclick="insertText('∑ᵢ₌₁ⁿ ')">Σ上下</button><button onclick="insertText('dx')">dx</button><button onclick="insertText('dy')">dy</button><button onclick="insertText('|')">|</button><button onclick="insertText('!')">!</button></div>
-<div id="logic" class="grid hidden">
-<button onclick="insertText('∩')">∩</button><button onclick="insertText('∪')">∪</button><button onclick="insertText('¬')">¬</button><button onclick="insertText('∧')">∧</button><button onclick="insertText('∨')">∨</button><button onclick="insertText('∈')">∈</button>
-<button onclick="insertText('∉')">∉</button><button onclick="insertText('⊂')">⊂</button><button onclick="insertText('⊆')">⊆</button><button onclick="insertText('⊇')">⊇</button><button onclick="insertText('∅')">∅</button><button onclick="insertText('∖')">∖</button>
-<button onclick="insertText('∀')">∀</button><button onclick="insertText('∃')">∃</button><button onclick="insertText('⇒')">⇒</button><button onclick="insertText('⇔')">⇔</button><button onclick="insertText('∴')">∴</button><button onclick="insertText('∵')">∵</button>
-<button onclick="insertText('{')">{</button><button onclick="insertText('}')">}</button><button onclick="insertText('[')">[</button><button onclick="insertText(']')">]</button><button onclick="insertText('∩')">∩</button><button onclick="insertText('∪')">∪</button></div>
-<p class="notice">この版はまず入力操作の検証用。分数や積分を教科書のように上下配置する機能は次の段階で追加します。</p></section></main><script>
-var field=document.getElementById('expr');var cursor=0;var end=0;function statusText(s){document.getElementById('status').textContent=s}function remember(){cursor=field.selectionStart;end=field.selectionEnd}field.addEventListener('click',remember);field.addEventListener('keyup',remember);field.addEventListener('select',remember);field.addEventListener('input',remember);
-function insertText(s){var a=Math.min(cursor,field.value.length),b=Math.min(end,field.value.length);field.value=field.value.slice(0,a)+s+field.value.slice(b);cursor=end=a+s.length;statusText('入力: '+s);}
-function erase(){var a=Math.min(cursor,field.value.length),b=Math.min(end,field.value.length);if(a===b&&a>0){a--;if(a>0&&/^[\\uDC00-\\uDFFF]$/.test(field.value.charAt(a)))a--;}field.value=field.value.slice(0,a)+field.value.slice(b);cursor=end=a;statusText('削除しました')}
-function moveCursor(n){cursor=end=Math.max(0,Math.min(field.value.length,cursor+n));statusText('カーソル位置: '+cursor)}
-function clearText(){field.value='';cursor=end=0;statusText('全消去しました')}
-function showTab(id,btn){['basic','math','logic'].forEach(function(x){document.getElementById(x).classList.toggle('hidden',x!==id)});document.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('active')});btn.classList.add('active')}
-function copyText(){var s=field.value;if(!s){statusText('まだ入力がありません');return;}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(function(){statusText('コピーしました')},function(){legacyCopy()})}else legacyCopy()}
-function legacyCopy(){field.focus();field.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}statusText(ok?'コピーしました':'長押ししてコピーしてください')}
-</script></body></html>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>数学キーボード</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="vendor/mathlive.min.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body><main>
+<header><p class="eyebrow">MY MATH NOTE</p><h1>数学キーボード</h1><p>式の空欄をタップして、そのまま入力。</p></header>
+<section class="panel" aria-label="数式エディタ">
+<label for="expr">数式</label>
+<math-field id="expr" math-virtual-keyboard-policy="manual" aria-label="数式入力欄"></math-field>
+<p class="hint">分子・分母・指数・上下限も自由に編集できます。「次の空欄」で移動。</p>
+<div class="navigation" id="navigation"></div>
+<div class="actions"><button id="undo">元に戻す</button><button id="clear">全消去</button><button id="copy" class="primary">LaTeXコピー</button></div>
+<p id="status" role="status" aria-live="polite">読み込み中…</p>
+<details><summary>LaTeXを表示・手動コピー</summary><textarea id="latex" readonly aria-label="LaTeX出力" spellcheck="false"></textarea></details>
+</section>
+<section class="panel keyboard" aria-label="タッチキーボード">
+<div class="tabs" role="tablist" aria-label="キーの種類"></div><div id="keys" class="grid" role="tabpanel"></div>
+</section>
+<p class="footnote">数式の中をタップ、または矢印で移動できます。入れ子の分数や根号にも対応。端末のキーボードからの入力も使えます。</p>
+<noscript>数式エディタを使うにはJavaScriptを有効にしてください。</noscript>
+</main></body></html>
